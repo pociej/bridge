@@ -8,10 +8,8 @@ export const observerUser = () => {
   Tracker.autorun(() => {
     const user = Meteor.user();
     if (Meteor.user()) {
-      // store.dispatch(userLogin(user));
+      store.dispatch(userLogin(user));
     } else {
-      console.log("user", user);
-      console.log("ada", userLogout);
       store.dispatch(userLogout);
     }
   });

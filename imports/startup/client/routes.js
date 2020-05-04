@@ -10,9 +10,7 @@ import { store, history } from "/imports/ui/state/store/configureStore.js";
 import { useStore } from "react-redux";
 import { PrivateRoute } from "./PrivateRoute.js";
 
-console.log("adasd", store);
 export const renderRoutes = () => {
-  console.log("rendering routes");
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>

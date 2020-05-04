@@ -1,11 +1,9 @@
 import React from "react";
 import { Route, Redirect } from "react-router";
-import { useStore } from "react-redux";
+import { useSelector } from "react-redux";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
-  const store = useStore();
-  const currentState = store.getState();
-  const isUserLoggedIn = !!currentState.currentUser;
+  const isUserLoggedIn = useSelector((state) => !!state.currentUser);
   return (
     <Route
       {...rest}

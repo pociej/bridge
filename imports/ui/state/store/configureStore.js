@@ -4,13 +4,13 @@ import { routerMiddleware } from "connected-react-router";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import createRootReducer from "../reducers";
+import rootReducer from "../reducers";
 
 export const history = createBrowserHistory();
 
 function configureStore(preloadedState) {
   const store = createStore(
-    createRootReducer(history),
+    rootReducer,
     preloadedState,
     composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk))
   );
@@ -18,4 +18,4 @@ function configureStore(preloadedState) {
   return store;
 }
 
-export const store = configureStore({ currentUser: "dupa" });
+export const store = configureStore({ currentUser: null });
