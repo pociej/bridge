@@ -107,3 +107,11 @@ img.card {
   position: absolute;
   width: 90px;
 }
+
+.W-hand {
+  transform: rotate(90deg);
+}
+
+.E-hand {
+  transform: rotate(270deg);
+}
