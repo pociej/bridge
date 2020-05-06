@@ -3,9 +3,10 @@ import { VULNERABILITY } from "/imports/lib/Vulnerability.js";
 import { POSITIONS } from "/imports/lib/positions.js";
 import SimpleSchema from "simpl-schema";
 import { _ } from "lodash";
-import { SPECIAL_BIDS } from "/import/lib/SpecialBids.js";
+import { SPECIAL_BIDS } from "/imports/lib/SpecialBids.js";
+import { BOARD_STATES } from "/imports/constants/BoardStates.js";
 import { CardSchema } from "./Boards.js";
-export const PlayedBoards = new Mongo.Collection("playedBoards");
+export const TableBoards = new Mongo.Collection("playedBoards");
 
 export const ContractSchema = new SimpleSchema({
   level: {
@@ -22,16 +23,40 @@ export const ContractSchema = new SimpleSchema({
   },
 });
 
-export const BiddingSchema = new SimpleSchema({});
+export const BidSchema = new SimpleSchema({
+  position: {
+    type: String,
+    allowedValues: _.values(POSITIONS),
+  },
+  bid: {
+    type: SimpleSchema.oneOf(
+      String,
+      new SimpleSchema({
+        level: {
+          type: Number,
+          allowedValues: _.range(1, 8),
+        },
+        suit: {
+          type: Number,
+          allowedValues: _.range(0, 4),
+        },
+      })
+    ),
+  },
+});
 
 //TODO : consider DB denormalisation to avoid joins
 
-const PlayedBoardSchema = new SimpleSchema({
+const TableBoardSchema = new SimpleSchema({
   boardId: {
     type: String,
   },
   //boardgame.io id
   gameId: {
+    optional: true,
+    type: String,
+  },
+  state: {
     type: String,
   },
 
@@ -46,6 +71,13 @@ const PlayedBoardSchema = new SimpleSchema({
       declarer: {
         type: String,
         allowedValues: _.values(POSITIONS),
+      },
+      bidding: {
+        type: Array,
+      },
+      //TODO make sure we will change once we wil be sure about data schema
+      "bidding.$": {
+        type: BidSchema,
       },
       tricks: {
         type: Array,
