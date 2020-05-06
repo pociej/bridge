@@ -7,10 +7,13 @@ import { store, history } from "/imports/ui/state/store/configureStore.js";
 export const observerUser = () => {
   Tracker.autorun(() => {
     const user = Meteor.user();
-    if (Meteor.user()) {
-      store.dispatch(userLogin(user));
-    } else {
-      store.dispatch(userLogout);
+    if (typeof Meteor.user() !== "undefined") {
+      if (Meteor.user()) {
+        store.dispatch(userLogin(user));
+      } else {
+        console.log("Meteor.user", Meteor.user());
+        store.dispatch(userLogout);
+      }
     }
   });
 };

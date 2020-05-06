@@ -5,5 +5,10 @@ import { Button, Card, Image, Grid } from "semantic-ui-react";
 
 export const Home = function (props) {
   const store = useStore();
-  return <div> </div>;
+  return (
+    <div>
+      {" "}
+      <Button> </Button>
+    </div>
+  );
 };

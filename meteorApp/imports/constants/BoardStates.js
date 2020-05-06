@@ -1,0 +1,5 @@
+export const BOARD_STATES = {
+  FINISHED: "FINISHED",
+  PLAYING: "PLAYING",
+  IN_QUEUE: "IN_QUEUE",
+};
