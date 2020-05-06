@@ -37,31 +37,43 @@ const PlayedBoardSchema = new SimpleSchema({
 
   //NOTE: below is kinda redundancy, but from other habd it could be better to have data in such
   //easy readable form than everytime get boardGame io data and parse them
-  contract: {
-    type: ContractSchema,
-  },
-  declarer: {
-    type: String,
-    allowedValues: _.values(POSITIONS),
-  },
-  tricks: {
-    type: Array,
-    minCount: 13,
-    maxCount: 13,
-  },
-  "tricks.$": {
+  playDetails: {
+    optional: true,
     type: new SimpleSchema({
-      leader: {
+      contract: {
+        type: ContractSchema,
+      },
+      declarer: {
         type: String,
         allowedValues: _.values(POSITIONS),
       },
-      cards: {
+      tricks: {
         type: Array,
-        minCount: 4,
-        maxCount: 4,
+        minCount: 13,
+        maxCount: 13,
       },
-      "cards.$": {
-        type: CardSchema,
+      "tricks.$": {
+        type: new SimpleSchema({
+          leader: {
+            type: String,
+            allowedValues: _.values(POSITIONS),
+          },
+          cards: {
+            type: Array,
+            minCount: 4,
+            maxCount: 4,
+          },
+          "cards.$": {
+            type: CardSchema,
+          },
+        }),
+      },
+      result: {
+        //tricks balance
+        type: SimpleSchema.Integer,
+      },
+      score: {
+        type: SimpleSchema.Integer,
       },
     }),
   },
