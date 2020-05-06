@@ -1,3 +1,1 @@
-Meteor.startup(() => {
-  console.log("starting up meteor server");
-});
+import "/imports/api";
