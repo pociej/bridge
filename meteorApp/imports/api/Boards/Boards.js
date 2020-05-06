@@ -10,7 +10,7 @@ import { deal } from "/imports/lib/deal.js";
 export const CardSchema = new SimpleSchema({
   suit: {
     type: Number,
-    allowedValues: _.range(0, 5),
+    allowedValues: _.range(0, 4),
   },
   value: {
     type: Number,
