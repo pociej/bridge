@@ -5,21 +5,43 @@ import { Hand } from "../Hand";
 import { Bidding } from "../Bidding";
 import React from "react";
 import { positionKey } from "/imports/lib/positions.js";
-const BridgeTable = function (props) {
-  const position = positionKey[props.playerID];
-  const isCurrenPlayerBidding = props.playerID === props.ctx.currentPlayer;
+import { PHASE_BIDDING, PHASE_DECLARE } from "/imports/lib/phases.js";
+import { _ } from "lodash";
+
+const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
+  const position = positionKey[playerID];
+  const isCurrenPlayerBidding =
+    ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
+  const playCard = moves.playCard || function () {};
+  console.log("is declare phase", PHASE_DECLARE, ctx.phase);
   return (
     <div>
-      <Hand hand={props.G.deal[position]} />
+      <Hand
+        hand={G.deal[position]}
+        playCard={
+          ctx.phase === PHASE_DECLARE
+            ? function (card) {
+                console.log("KURWA TWOJA W TE I NA ZAD", moves);
+                moves.playCard(card);
+              }
+            : (G, ctx) => {
+                console.log("DUPA", G, ctx);
+              }
+        }
+      />
       {isCurrenPlayerBidding ? (
         <Bidding
           position={position}
-          G={props.G}
-          makeBid={function (G, ctx, bid) {
-            props.moves.bid(G, ctx, bid);
-            props.events.endTurn();
+          G={G}
+          makeBid={function (bid) {
+            //
+            moves.bid(bid);
+            // try {
+            // } catch (err) {
+            //   console.log("DUPA");
+            // }
           }}
-          ctx={props.ctx}
+          ctx={ctx}
         ></Bidding>
       ) : (
         ""

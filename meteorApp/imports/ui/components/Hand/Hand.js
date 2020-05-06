@@ -1,13 +1,14 @@
 import React from "react";
 import { Card } from "../Card";
 
-export const Hand = ({ position, hand }) => {
+export const Hand = ({ position, hand, playCard }) => {
   const className = `hand hhand-compact active-hand ${position}-hand`;
+
   return (
     <div className={className}>
       {hand.map((card, i) => {
         const key = `card_${i}`;
-        return <Card key={key} card={card} />;
+        return <Card key={key} card={card} playCard={playCard} />;
       })}
     </div>
   );

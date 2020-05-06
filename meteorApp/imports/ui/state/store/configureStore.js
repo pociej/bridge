@@ -18,4 +18,4 @@ function configureStore(preloadedState) {
   return store;
 }
 
-export const store = configureStore({ currentUser: null });
+export const store = configureStore({ currentUser: "loading" });

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { _ } from "lodash";
 export const getCardImage = function ({ suit, value }) {
   const mapCardValueToSymbol = {
     11: "J",
@@ -15,7 +15,15 @@ export const getCardImage = function ({ suit, value }) {
   }.svg`;
 };
 
-export const Card = function ({ card }) {
+export const Card = function ({ card, playCard }) {
   const { suit, value } = card;
-  return <img className="card" src={getCardImage({ suit, value })} />;
+  return (
+    <img
+      className="card"
+      onClick={() => {
+        console.log("clicked", playCard(card));
+      }}
+      src={getCardImage({ suit, value })}
+    />
+  );
 };
