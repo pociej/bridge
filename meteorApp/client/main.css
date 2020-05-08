@@ -1,6 +1,14 @@
 body {
   padding: 10px;
   font-family: sans-serif;
+  background-image: url("table.jpg") !important;
+}
+
+.central {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 img.card {

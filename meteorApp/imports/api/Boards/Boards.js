@@ -60,6 +60,15 @@ export const BoardsSchema = new SimpleSchema({
 });
 
 export const Boards = new Mongo.Collection("Boards");
+
+export const makeNewBoard = function () {
+  return Boards.insert({
+    deal: deal(),
+    vulnerability: _.values(VULNERABILITY)[_.random(0, 3)],
+    dealer: _.values(POSITIONS)[_.random(0, 3)],
+  });
+};
+
 Boards.attachSchema(BoardsSchema);
 //TODO : we need here smart mechanism for deals pool
 //so we avoid generating tones of boards on demand but from other hand it has to be big enough

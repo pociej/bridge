@@ -9,15 +9,17 @@ import { Provider } from "react-redux";
 import { store, history } from "/imports/ui/state/store/configureStore.js";
 import { useStore } from "react-redux";
 import { PrivateRoute } from "./PrivateRoute.js";
+import { Notifications } from "/imports/ui/components/Notifications/";
 
 export const renderRoutes = () => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
+          {/* <Notification></Notifications> */}
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={Login} />
-
+          <Route path="/table" component={Table} />
           <Route component={NotFoundPage} />
         </Switch>
       </ConnectedRouter>

@@ -1,0 +1,4 @@
+export const PLAYER_TABLE_STATUS = {
+  AT_TABLE: "AT_TABLE",
+  WAITING: "WAITING",
+};

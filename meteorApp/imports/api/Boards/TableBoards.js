@@ -58,6 +58,7 @@ const TableBoardSchema = new SimpleSchema({
   },
   state: {
     type: String,
+    allowedValues: _.values(BOARD_STATES),
   },
 
   //NOTE: below is kinda redundancy, but from other habd it could be better to have data in such
