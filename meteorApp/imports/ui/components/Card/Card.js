@@ -10,9 +10,9 @@ export const getCardImage = function ({ suit, value }) {
   //TODO : this is essential, as this declars how colours are mapped to numbers
   // and will be used in all rendereds ( like export ). Move it to common place.
   const mapSuitToSymbol = ["D", "C", "H", "S"];
-  return `cards/${mapCardValueToSymbol[value] || value}${
+  return `/cards/${mapCardValueToSymbol[value] || value}${
     mapSuitToSymbol[suit]
-  }.svg`;
+    }.svg`;
 };
 
 export const Card = function ({ card, playCard }) {

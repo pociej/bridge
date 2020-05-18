@@ -17,7 +17,7 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
   const position = positionKey[playerID];
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
-  const playCard = moves.playCard || function () {};
+  const playCard = moves.playCard || function () { };
 
   return (
     <div>
@@ -26,9 +26,9 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
         playCard={
           ctx.phase === PHASE_DECLARE
             ? function (card) {
-                moves.playCard(card);
-              }
-            : (G, ctx) => {}
+              moves.playCard(card);
+            }
+            : (G, ctx) => { }
         }
       />
       {isCurrenPlayerBidding ? (
@@ -36,18 +36,15 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
           position={position}
           G={G}
           makeBid={function (bid) {
-            //
+
             moves.bid(bid);
-            // try {
-            // } catch (err) {
-            //   console.log("DUPA");
-            // }
+
           }}
           ctx={ctx}
         ></Bidding>
       ) : (
-        ""
-      )}
+          ""
+        )}
     </div>
   );
 };
@@ -65,19 +62,19 @@ export const Table = (props) => {
 
   // ./
 
-  return <div>HERE IS THE TABL {isTableLoading} </div>;
-  // const BridgeClient = Client({
-  //   game: BridgeDealFactory({ vulnerability: "NS" }),
-  //   board: BridgeTable.bind(this),
-  //   numPlayers: 4,
-  //   multiplayer: Local(),
-  // });
-  // return (
-  //   <div id="table">
-  //     <BridgeClient gameID="123" playerID="0" />
-  //     <BridgeClient gameID="123" playerID="1" />
-  //     <BridgeClient gameID="123" playerID="2" />
-  //     <BridgeClient gameID="123" playerID="3" />
-  //   </div>
-  // );
+  // return <div>HERE IS THE TABL {isTableLoading} </div>;
+  const BridgeClient = Client({
+    game: BridgeDealFactory({ vulnerability: "NS" }),
+    board: BridgeTable.bind(this),
+    numPlayers: 4,
+    multiplayer: Local(),
+  });
+  return (
+    <div id="table">
+      <BridgeClient gameID="123" playerID="0" />
+      <BridgeClient gameID="123" playerID="1" />
+      <BridgeClient gameID="123" playerID="2" />
+      <BridgeClient gameID="123" playerID="3" />
+    </div>
+  );
 };
