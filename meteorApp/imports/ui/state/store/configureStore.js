@@ -4,13 +4,13 @@ import { routerMiddleware } from "connected-react-router";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import rootReducer from "../reducers";
+import createRootReducer from "../reducers";
 
 export const history = createBrowserHistory();
 
 function configureStore(preloadedState) {
   const store = createStore(
-    rootReducer,
+    createRootReducer(history),
     preloadedState,
     composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk))
   );

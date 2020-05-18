@@ -12,14 +12,14 @@ import {
 } from "semantic-ui-react";
 import { _ } from "lodash";
 import { createNewTable } from "/imports/api/Tables";
+import { history } from "/imports/ui/state/store/configureStore.js";
 
-export const NewTable = () => {
+export const NewTable = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState(false);
   const [positions, setPositions] = useState({ N: "", S: "", E: "", W: "" });
-  const handleChange = (e, v, s) => {
-    console.log("E", e, v, s);
-  };
+
+  console.log("this,pros", props, this.props);
   return (
     <Modal
       trigger={
@@ -99,6 +99,8 @@ export const NewTable = () => {
             });
             createNewTable.call({ players }, (err, res) => {
               err && setError(err.reason);
+              console.log("res", res);
+              history.push(`/table/${res}`);
             });
           }}
         >

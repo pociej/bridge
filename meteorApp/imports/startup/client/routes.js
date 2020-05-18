@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import { Login } from "/imports/ui/components/Login/index.js";
 import { Lobby } from "/imports/ui/components/Lobby";
+import { Table } from "/imports/ui/components/Table";
 import { Home } from "/imports/ui/components/Home/index.jsx";
 import { NotFoundPage } from "/imports/ui/pages/NotFoundPage.jsx";
 import { ConnectedRouter } from "connected-react-router";
@@ -19,7 +20,7 @@ export const renderRoutes = () => {
           {/* <Notification></Notifications> */}
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={Login} />
-          <Route path="/table" component={Table} />
+          <Route path="/table/:tableId" component={Table} />
           <Route component={NotFoundPage} />
         </Switch>
       </ConnectedRouter>

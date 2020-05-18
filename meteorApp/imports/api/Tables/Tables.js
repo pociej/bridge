@@ -46,7 +46,9 @@ const TableSchema = new SimpleSchema({
 });
 
 export const Tables = new Mongo.Collection("tables", {
-  transform: (doc) => {},
+  transform: (doc) => {
+    return doc;
+  },
 });
 
 Tables.attachSchema(TableSchema);

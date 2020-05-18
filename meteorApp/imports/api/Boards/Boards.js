@@ -75,14 +75,14 @@ Boards.attachSchema(BoardsSchema);
 //and to make sure there is always enough deals to server users
 Meteor.startup(function () {
   if (Boards.find().count() === 0) {
-    Array(1000)
-      .fill()
-      .forEach((e) => {
-        Boards.insert({
-          deal: deal(),
-          vulnerability: _.values(VULNERABILITY)[_.random(0, 3)],
-          dealer: _.values(POSITIONS)[_.random(0, 3)],
-        });
-      });
+    // Array(1000)
+    //   .fill()
+    //   .forEach((e) => {
+    //     Boards.insert({
+    //       deal: deal(),
+    //       vulnerability: _.values(VULNERABILITY)[_.random(0, 3)],
+    //       dealer: _.values(POSITIONS)[_.random(0, 3)],
+    //     });
+    //   });
   }
 });

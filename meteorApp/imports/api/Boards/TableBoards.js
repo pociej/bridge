@@ -5,8 +5,13 @@ import SimpleSchema from "simpl-schema";
 import { _ } from "lodash";
 import { SPECIAL_BIDS } from "/imports/lib/SpecialBids.js";
 import { BOARD_STATES } from "/imports/constants/BoardStates.js";
-import { CardSchema } from "./Boards.js";
-export const TableBoards = new Mongo.Collection("playedBoards");
+import { CardSchema, Boards } from "./Boards.js";
+export const TableBoards = new Mongo.Collection("tableBoards", {
+  transform: (doc) => {
+    const board = Boards.findOne(doc.boardId);
+    return { ...doc, board };
+  },
+});
 
 export const ContractSchema = new SimpleSchema({
   level: {
@@ -48,6 +53,9 @@ export const BidSchema = new SimpleSchema({
 //TODO : consider DB denormalisation to avoid joins
 
 const TableBoardSchema = new SimpleSchema({
+  tableId: {
+    type: String,
+  },
   boardId: {
     type: String,
   },
