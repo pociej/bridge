@@ -11,6 +11,8 @@ services:
     ports:
       - 8080:3000
     volumes:
+      - ./userApp:/app
+      - /app/node_modules/
       - ./lib:/app/imports/lib
 
   game_server:
@@ -24,4 +26,6 @@ services:
     ports:
       - 8081:3030
     volumes:
+      - ./gameServer:/app
+      - /app/node_modules/
       - ./lib:/app/imports/lib
