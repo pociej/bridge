@@ -72,21 +72,21 @@ export const Table = (props) => {
   });
   return (
     <div id="table">
-      <div class="ui three column grid">
-        <div class="row">
-          <div class="column"></div>
-          <div class="column"> <BridgeClient gameID="123" playerID="0" /></div>
-          <div class="column"></div>
+      <div className="ui three column grid">
+        <div className="row">
+          <div className="column"></div>
+          <div className="column"> <BridgeClient gameID="123" playerID="0" /></div>
+          <div className="column"></div>
         </div>
-        <div class="row">
-          <div class="column"><BridgeClient gameID="123" playerID="3" /></div>
-          <div class="column"></div>
-          <div class="column"><BridgeClient gameID="123" playerID="1" /></div>
+        <div className="row">
+          <div className="column"><BridgeClient gameID="123" playerID="3" /></div>
+          <div className="column"></div>
+          <div className="column"><BridgeClient gameID="123" playerID="1" /></div>
         </div>
-        <div class="row">
-          <div class="column"></div>
-          <div class="column"><BridgeClient gameID="123" playerID="2" /></div>
-          <div class="column"></div>
+        <div className="row">
+          <div className="column"></div>
+          <div className="column"><BridgeClient gameID="123" playerID="2" /></div>
+          <div className="column"></div>
         </div>
       </div>
     </div>
