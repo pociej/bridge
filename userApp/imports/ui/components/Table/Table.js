@@ -19,11 +19,11 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
   })
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
-  const playCard = moves.playCard || function () { };
+  console.log(G);
   return (
     <div>
       <Hand
-        hand={G.deal[position]}
+        hand={G.hands[position]}
         playCard={
           ctx.phase === PHASE_DECLARE
             ? function (card) {
