@@ -30,11 +30,13 @@ img.card {
 .active-hand img.card {
   cursor: pointer;
 }
-
+.debug-panel{
+  display : none!important
+}
 /*
  * A horizontal hand, class="hand hhand".  The enitire card is visible.
  */
-.hhand {
+.hhand { 
   display: inline-block;
 }
 .hhand img.card {
@@ -59,11 +61,25 @@ img.card {
   padding-left: 10px;
 }
 
+/**
+ * Card row rules 
+ */
+.card-row.card-row-E {
+    margin-left: auto;
+    margin-right: 0;
+}
+.card-row.card-row-E, .card-row.card-row-W  {
+    margin-top: -115px;
+}
+.card-row.card-row-E:first-child, .card-row.card-row-W:first-child  {
+    margin-top: 0px;
+}
+
 /*
  * A compact horizontal hand.  Only the last card is entirely visible.
  */
 .hhand-compact {
-  display: inline-block;
+  display: flex;
 }
 .hhand-compact img.card:first-child {
   margin-left: 0px;
@@ -76,6 +92,9 @@ img.card {
 .hhand-compact.active-hand img.card:hover {
   padding-top: 0px;
   padding-bottom: 10px;
+}
+.hhand-compact.E-hand, .hhand-compact.W-hand {
+    flex-direction: column;
 }
 
 /*
@@ -116,10 +135,9 @@ img.card {
   width: 90px;
 }
 
-.W-hand {
-  transform: rotate(90deg);
-}
+/* Uncomment below to remove debug panel for boardgame.io
+*/
 
-.E-hand {
-  transform: rotate(270deg);
-}
+/* .debug-panel {
+    display: none !important
+} */

@@ -1,0 +1,9 @@
+.git/
+chart/
+dev-utils/
+Dockerfile.*
+Makefile
+
+gameServer/node_modules
+userApp/node_modules
+userApp/.meteor/local
