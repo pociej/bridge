@@ -1,0 +1,27 @@
+version: "3.0"
+services:
+  user_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.userApp
+      args:
+        - NODE_ENV=development
+    environment:
+      - METEOR_ALLOW_SUPERUSER=true
+    ports:
+      - 8080:3000
+    volumes:
+      - ./lib:/app/imports/lib
+
+  game_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.gameServer
+      args:
+        - NODE_ENV=development
+    environment:
+      - PORT=3030
+    ports:
+      - 8081:3030
+    volumes:
+      - ./lib:/app/imports/lib

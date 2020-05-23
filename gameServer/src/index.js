@@ -1,14 +1,11 @@
-import { Bridge } from './lib/bridge.js';
-import { Server, Mongo } from 'boardgame.io/server';
-const cors = require('@koa/cors');
+import { Server } from 'boardgame.io/server';
+import { BridgeDealFactory } from '../imports/lib/bridge.js';
+import cors from '@koa/cors';
 
-//for now in memory 
+//for now in memory
 const server = Server({
-  games: [Bridge],
-  // db: new Mongo({
-  //   url: '',
-  //   dbname: 'zz',
-  // }),
+  games: [BridgeDealFactory],
 });
-server.run(3030);
+
 server.app.use(cors({ origin: '*' }));
+server.run(process.env.PORT);
