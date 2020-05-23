@@ -22,12 +22,12 @@ export const Hand = ({ position, hand, playCard }) => {
         })
         :
         Object.values(groupedHand).reverse().map(suit => (
-          <>
+          <React.Fragment key={suit[0].suit}>
             <div className={rowClassName}>
               {renderSuit(suit)}
             </div>
             <br />
-          </>
+          </React.Fragment>
         ))
       }
     </div>
