@@ -43,6 +43,16 @@ const TableSchema = new SimpleSchema({
     type: SimpleSchema.Integer,
     optional: true,
   },
+  owner: {
+    type: new SimpleSchema({
+      id: {
+        type: String,
+      },
+      name: {
+        type: String
+      }
+    })
+  }
 });
 
 export const Tables = new Mongo.Collection("tables", {
