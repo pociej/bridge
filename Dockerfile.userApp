@@ -1,0 +1,14 @@
+FROM node:12.16
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY userApp/package.json userApp/package-lock.json /app/
+RUN npm install
+
+RUN curl https://install.meteor.com/ | sh
+
+COPY ./userApp /app/
+COPY ./lib /app/imports/
+
+CMD [ "npm", "start" ]

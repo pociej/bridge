@@ -1,0 +1,12 @@
+FROM node:12.16
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY gameServer/package.json gameServer/package-lock.json /app/
+RUN npm install
+
+COPY ./gameServer /app/
+COPY ./lib /app/imports/
+
+CMD [ "npm", "start" ]
