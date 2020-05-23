@@ -9,6 +9,6 @@ RUN npm install
 RUN curl https://install.meteor.com/ | sh
 
 COPY ./userApp /app/
-COPY ./lib /app/imports/
+COPY ./lib /app/imports/lib
 
 CMD [ "npm", "start" ]
