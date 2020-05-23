@@ -12,8 +12,9 @@ import { Tables } from "/imports/api/Tables";
 import { TableBoards, gerDeal } from "/imports/api/Boards";
 import { getNewTableBoard } from "/imports/api/Tables";
 import { useParams } from "react-router-dom";
+import { BiddingView } from "../BiddingView"
 
-const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
+const BridgeHand = function ({ G, ctx, playerID, moves, events }) {
   const position = positionKey[playerID];
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
@@ -32,26 +33,14 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
             : (G, ctx) => { }
         }
       />
-      {isCurrenPlayerBidding ? (
-        <Bidding
-          position={position}
-          G={G}
-          makeBid={function (bid) {
-
-            moves.bid(bid);
-
-          }}
-          ctx={ctx}
-        ></Bidding>
-      ) : (
-          ""
-        )}
     </div>
   );
 };
 
 export const Table = (props) => {
   const { tableId } = useParams();
+  const { G, ctx, playerID, moves, events } = props;
+  const position = positionKey[playerID];
   const { table, boards, isTableLoading } = useTracker(() => {
     const sub = Meteor.subscribe("oneTable", { tableId });
     return {
@@ -60,35 +49,92 @@ export const Table = (props) => {
       boards: TableBoards.find({ tableId }),
     };
   });
+  const renderBidding = () => {
+    return (
+      <div className="ui three column grid">
+        <div className="row">
+          <div className="column"></div>
+        </div>
+        <div className="row">
+          <div className="two wide column"></div>
+          <div className="twelve wide column">
+            <Bidding
+              position={position}
+              G={G}
+              makeBid={function (bid) {
+                moves.bid(bid);
+              }}
+              ctx={ctx}
+            ></Bidding>
+          </div>
+          <div className="two wide column"></div>
+        </div>
+        <div className="row">
+          <div className="sixteen wide column">
+            <BiddingView bids={[{
+              bid: "PASS"
+            },{
+              level:2,
+              suit:0
+            },
+            {
+              level:3,
+              suit:1
+            },
+            {
+              level:4,
+              suit:2
+            },
+            {
+              level:5,
+              suit:3
+            },
+            {
+              level:6,
+              suit:4
+            }
 
-  // ./
+            ]}></BiddingView>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
-  // return <div>HERE IS THE TABL {isTableLoading} </div>;
-  const BridgeClient = Client({
-    game: BridgeDealFactory({ vulnerability: "NS" }),
-    board: BridgeTable.bind(this),
-    numPlayers: 4,
-    multiplayer: Local(),
-  });
   return (
     <div id="table">
       <div className="ui three column grid">
         <div className="row">
           <div className="column"></div>
-          <div className="column"> <BridgeClient gameID="123" playerID="0" /></div>
+          <div className="column"><BridgeHand {...props} /></div>
           <div className="column"></div>
         </div>
         <div className="row">
-          <div className="column"><BridgeClient gameID="123" playerID="3" /></div>
-          <div className="column"></div>
-          <div className="column"><BridgeClient gameID="123" playerID="1" /></div>
+          <div className="five wide column" style={{minHeight: '300px'}}></div>
+          <div className="six wide column">
+            {renderBidding()}
+          </div>
+          <div className="five wide column" style={{minHeight:'300px'}}></div>
         </div>
         <div className="row">
           <div className="column"></div>
-          <div className="column"><BridgeClient gameID="123" playerID="2" /></div>
+          <div className="column"><BridgeHand {...props} /></div>
           <div className="column"></div>
         </div>
       </div>
     </div>
   );
+};
+
+
+export const ClientTable = (props) => {
+  const { tableId } = useParams();
+  const BridgeClient = Client({
+    game: BridgeDealFactory({ vulnerability: "NS" }),
+    board: Table,
+    numPlayers: 4,
+    multiplayer: Local(),
+  });
+
+  return <BridgeClient gameID="123" playerID="2" />;
 };

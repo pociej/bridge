@@ -56,13 +56,9 @@ export const Bidding = ({ G, ctx, makeBid, position }) => {
   });
 
   return (
-    <div style={{ display: "inline" }}>
-      <Card style={{ minWidth: "800px" }}>
+      <Card fluid>
         <Card.Content>
           <Grid>
-            <Grid.Column width={3}>
-              <Button.Group vertical>{SpecialBids}</Button.Group>
-            </Grid.Column>
             <Grid.Column width={13}>
               <Button.Group>
                 {levels.map((level) => {
@@ -78,8 +74,10 @@ export const Bidding = ({ G, ctx, makeBid, position }) => {
                   );
                 })}
               </Button.Group>
+            </Grid.Column>
+            <Grid.Column width={13}>
               <Button.Group>
-                {_.get(bids, selectedLevel, []).map((bid) => {
+                {_.get(bids, selectedLevel, []).sort((a, b) => (a.suit > b.suit) ? 1 : -1).map((bid) => {
                   return (
                     <Button
                       key={`suitButton_${bid.suit}`}
@@ -94,8 +92,12 @@ export const Bidding = ({ G, ctx, makeBid, position }) => {
               </Button.Group>
             </Grid.Column>
           </Grid>
+          <Grid>
+            <Grid.Column width={3}>
+              <Button.Group vertical>{SpecialBids}</Button.Group>
+            </Grid.Column>
+          </Grid>
         </Card.Content>
       </Card>
-    </div>
   );
 };
