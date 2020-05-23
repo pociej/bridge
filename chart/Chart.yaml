@@ -1,0 +1,4 @@
+apiVersion: v1
+description: A helm chart for Play Engine
+name: play-engine
+version: 0.1.0

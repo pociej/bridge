@@ -7,6 +7,6 @@ COPY gameServer/package.json gameServer/package-lock.json /app/
 RUN npm install
 
 COPY ./gameServer /app/
-COPY ./lib /app/imports/
+COPY ./lib /app/imports/lib
 
 CMD [ "npm", "start" ]
