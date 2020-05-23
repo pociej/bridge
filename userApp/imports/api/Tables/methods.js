@@ -33,7 +33,6 @@ export const createNewTable = new ValidatedMethod({
         return { position, username, userId: user._id, atTable: false };
       });
 
-      console.log("ownwer", owner);
       const tableId = Tables.insert({
         owner: {
           name: owner.username,
