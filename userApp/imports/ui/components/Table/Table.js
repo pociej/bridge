@@ -17,11 +17,9 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
   const position = _.keys(positionKey).find(key => {
     return positionKey[key] == playerID;
   })
-
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
   const playCard = moves.playCard || function () { };
-  console.log("G", G, ctx);
   return (
     <div>
       <Hand
