@@ -22,6 +22,7 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
   return (
     <div>
       <Hand
+        position={position}
         hand={G.deal[position]}
         playCard={
           ctx.phase === PHASE_DECLARE
@@ -71,10 +72,23 @@ export const Table = (props) => {
   });
   return (
     <div id="table">
-      <BridgeClient gameID="123" playerID="0" />
-      <BridgeClient gameID="123" playerID="1" />
-      <BridgeClient gameID="123" playerID="2" />
-      <BridgeClient gameID="123" playerID="3" />
+      <div class="ui three column grid">
+        <div class="row">
+          <div class="column"></div>
+          <div class="column"> <BridgeClient gameID="123" playerID="0" /></div>
+          <div class="column"></div>
+        </div>
+        <div class="row">
+          <div class="column"><BridgeClient gameID="123" playerID="3" /></div>
+          <div class="column"></div>
+          <div class="column"><BridgeClient gameID="123" playerID="1" /></div>
+        </div>
+        <div class="row">
+          <div class="column"></div>
+          <div class="column"><BridgeClient gameID="123" playerID="2" /></div>
+          <div class="column"></div>
+        </div>
+      </div>
     </div>
   );
 };
