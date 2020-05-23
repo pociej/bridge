@@ -5,6 +5,9 @@ USER_APP_VERSION ?= 0.0.0-dev
 GAME_SERVER_TAG=${DOCKER_REPO}/game-server:${GAME_SERVER_VERSION}
 USER_APP_TAG=${DOCKER_REPO}/user-app:${USER_APP_VERSION}
 
+USER_APP_EXTERNAL_HOSTNAME ?= play.hackathon.globalbridge.app
+GAME_SERVER_EXTERNAL_HOSTNAME ?= api.hackathon.globalbridge.app
+
 PLAY_ENGINE_K8S_NS ?= play-engine
 GCP_PROJECT ?= online-bridge-hackathon-2020
 GKE_CLUSTER_NAME ?= hackathon-cluster
@@ -37,8 +40,10 @@ push_user_app:
 
 deploy: set_gcp_context ensure_ns
 	helm upgrade --install play-engine ./chart \
-	  --set userApp.image=${USER_APP_TAG} \
-		--set gameServer.image=${GAME_SERVER_TAG} \
+	  --set userApp.image="${USER_APP_TAG}" \
+		--set userApp.externalHostname="${USER_APP_EXTERNAL_HOSTNAME}" \
+		--set gameServer.image="${GAME_SERVER_TAG}" \
+		--set gameServer.externalHostname="${GAME_SERVER_EXTERNAL_HOSTNAME}" \
 		--namespace ${PLAY_ENGINE_K8S_NS} \
 		--history-max=10
 
