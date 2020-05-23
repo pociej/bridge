@@ -24,6 +24,7 @@ export const createNewTable = new ValidatedMethod({
   }).validator(),
   run({ players }) {
     if (Meteor.isServer) {
+      const owner = Meteor.users.findOne(this.userId);
       const tablePlayers = players.map(({ position, username }) => {
         const user = Meteor.users.findOne({ username });
         if (!user) {
@@ -33,6 +34,10 @@ export const createNewTable = new ValidatedMethod({
       });
 
       const tableId = Tables.insert({
+        owner: {
+          name: owner.username,
+          id: owner._id
+        },
         players: tablePlayers,
         boards: [],
       });
@@ -55,7 +60,7 @@ export const createNewTable = new ValidatedMethod({
 
 export const finishBoard = new ValidatedMethod({
   name: "Table.finishBoard",
-  validate() {},
+  validate() { },
   run({ board, tableId }) {
     //TODO IMPORTANT: update board meta
 
