@@ -55,9 +55,17 @@ const TableSchema = new SimpleSchema({
   }
 });
 
+
+const playerInterface = {
+  getCurrentBoardId() {
+    return this.boards.find((board) => {
+      return board.state === BOARD_STATES.PLAYING;
+    });
+  }
+};
 export const Tables = new Mongo.Collection("tables", {
   transform: (doc) => {
-    return doc;
+    return Object.assign(Object.create(playerInterface), doc);
   },
 });
 
