@@ -23,35 +23,51 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
   const playerPosition = playerIdToPosition(playerID);
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
+
+
   return (
     <div className="ui three column grid">
       <div className="row">
         <div className="column"></div>
-        <div className="column"> {tablePositionToPosition(TABLE_POSITIONS.CHO, playerPosition)}</div>
+        <div className="column">
+          <Hand
+            ctx={ctx}
+            G={G}
+            tablePosition={TABLE_POSITIONS.CHO}
+            position={tablePositionToPosition(TABLE_POSITIONS.CHO)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.CHO)]}
+            cardsHidden={true}
+          />
+        </div>
         <div className="column"></div>
       </div>
       <div className="row">
-        <div className="column">{tablePositionToPosition(TABLE_POSITIONS.LHO, playerPosition)} </div>
+        <div className="column">
+          <Hand
+            ctx={ctx}
+            G={G}
+            tablePosition={TABLE_POSITIONS.LHO}
+            position={tablePositionToPosition(TABLE_POSITIONS.LHO)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.LHO)]}
+            cardsHidden={true}
+          />
+        </div>
         <div className="column"></div>
-        <div className="column">{tablePositionToPosition(TABLE_POSITIONS.RHO, playerPosition)}</div>
+        <div className="column">
+          <Hand
+            ctx={ctx}
+            G={G}
+            tablePosition={TABLE_POSITIONS.RHO}
+            position={tablePositionToPosition(TABLE_POSITIONS.RHO)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.RHO)]}
+            cardsHidden={true}
+          />
+        </div>
       </div>
       <div className="row">
         <div className="column"></div>
         <div className="column">
           <div>
-            <Hand
-              hand={G.hands[playerPosition]}
-              G={G}
-              ctx={ctx}
-              position={playerPosition}
-              playCard={
-                ctx.phase === PHASE_DECLARE
-                  ? function (card) {
-                    moves.playCard(card);
-                  }
-                  : (G, ctx) => { }
-              }
-            />
             {isCurrenPlayerBidding ? (
               <Bidding
                 position={playerPosition}
@@ -64,6 +80,21 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
             ) : (
                 ""
               )}
+            <Hand
+              tablePosition={TABLE_POSITIONS.PLAYER}
+              G={G}
+              ctx={ctx}
+              hand={G.hands[playerPosition]}
+              position={playerPosition}
+              playCard={
+                ctx.phase === PHASE_DECLARE
+                  ? function (card) {
+                    moves.playCard(card);
+                  }
+                  : (G, ctx) => { }
+              }
+            />
+
           </div>
         </div>
         <div className="column"></div>

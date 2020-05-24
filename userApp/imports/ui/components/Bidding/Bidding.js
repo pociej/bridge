@@ -57,7 +57,7 @@ export const Bidding = ({ G, ctx, makeBid, position }) => {
 
   return (
     <div style={{ display: "inline" }}>
-      <Card style={{ minWidth: "800px" }}>
+      <Card style={{ minWidth: "100%" }}>
         <Card.Content>
           <Grid>
             <Grid.Column width={3}>

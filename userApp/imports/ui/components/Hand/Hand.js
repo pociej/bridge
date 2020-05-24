@@ -2,27 +2,33 @@ import React from "react";
 import { Card } from "../Card";
 import _ from "lodash";
 
-export const Hand = ({ position, hand, playCard, G, ctx }) => {
-  const containerClassName = `hand hhand-compact active-hand ${position}-hand`;
-  const rowClassName = `card-row card-row-${position}`;
+import {
+  TABLE_POSITIONS
+} from "/imports/lib/positions.js";
 
-  const groupedHand = _.groupBy(hand, (card) => card.suit);
+export const Hand = ({ tablePosition, position, hand, cardsHidden, playCard, G, ctx }) => {
+  const containerClassName = `hand hhand-compact active-hand ${tablePosition}-hand`;
+  const rowClassName = `card-row card-row-${tablePosition}`;
+
+  const groupedHand = _.groupBy(hand, (card) => cardsHidden ? _.findIndex(hand, (e) => {
+    return e.suit === card.suit && e.value === card.value
+  }) % 4 : card.suit);
 
   const renderSuit = (suit) => suit.map((card, i) => {
     const key = `card_${i}`;
-    return <Card key={key} card={card} playCard={playCard} G={G} ctx={ctx} />;
+    return <Card key={key} card={card} hidden={cardsHidden} playCard={playCard} G={G} ctx={ctx} />;
   });
-
+  console.log("tabv", tablePosition, TABLE_POSITIONS.CHO, TABLE_POSITIONS.PLAYER)
   return (
     <div className={containerClassName}>
-      {position === 'S' || position === 'N' ?
+      {tablePosition === TABLE_POSITIONS.CHO || tablePosition === TABLE_POSITIONS.PLAYER ?
         hand.map((card, i) => {
           const key = `card_${i}`;
-          return <Card key={key} card={card} playCard={playCard} G={G} ctx={ctx} />;
+          return <Card key={key} card={card} hidden={cardsHidden} playCard={playCard} G={G} ctx={ctx} />;
         })
         :
-        Object.values(groupedHand).reverse().map(suit => (
-          <React.Fragment key={suit[0].suit}>
+        Object.values(groupedHand).reverse().map((suit, index) => (
+          <React.Fragment key={`fragment_${index}`}>
             <div className={rowClassName}>
               {renderSuit(suit)}
             </div>

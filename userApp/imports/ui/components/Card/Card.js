@@ -1,7 +1,8 @@
 import React from "react";
 import { _ } from "lodash";
 import { isCardAllowedToPlay } from '/imports/lib/isCardAllowedToPlay';
-export const getCardImage = function ({ suit, value }) {
+export const getCardImage = function ({ suit, value, hidden }) {
+  if (hidden) return `/cards/Blue_Back.svg`;
   const mapCardValueToSymbol = {
     11: "J",
     12: "Q",
@@ -16,7 +17,7 @@ export const getCardImage = function ({ suit, value }) {
     }.svg`;
 };
 
-export const Card = function ({ card, playCard, G, ctx }) {
+export const Card = function ({ card, playCard, G, ctx, hidden }) {
   const { suit, value } = card;
   return (
     <img
@@ -25,7 +26,7 @@ export const Card = function ({ card, playCard, G, ctx }) {
         if (isCardAllowedToPlay({ G, card, ctx }))
           console.log("clicked", playCard(card));
       }}
-      src={getCardImage({ suit, value })}
+      src={getCardImage({ suit, value, hidden })}
     />
   );
 };

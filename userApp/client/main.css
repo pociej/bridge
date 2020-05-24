@@ -64,14 +64,14 @@ img.card {
 /**
  * Card row rules 
  */
-.card-row.card-row-E {
+.card-row.card-row-RHO {
     margin-left: auto;
     margin-right: 0;
 }
-.card-row.card-row-E, .card-row.card-row-W  {
+.card-row.card-row-RHO, .card-row.card-row-LHO  {
     margin-top: -115px;
 }
-.card-row.card-row-E:first-child, .card-row.card-row-W:first-child  {
+.card-row.card-row-RHO:first-child, .card-row.card-row-LHO:first-child  {
     margin-top: 0px;
 }
 
@@ -93,7 +93,7 @@ img.card {
   padding-top: 0px;
   padding-bottom: 10px;
 }
-.hhand-compact.E-hand, .hhand-compact.W-hand {
+.hhand-compact.RHO-hand, .hhand-compact.LHO-hand {
     flex-direction: column;
 }
 
