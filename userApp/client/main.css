@@ -30,7 +30,9 @@ img.card {
 .active-hand img.card {
   cursor: pointer;
 }
-
+.debug-panel{
+  display : none!important
+}
 /*
  * A horizontal hand, class="hand hhand".  The enitire card is visible.
  */

@@ -1,5 +1,6 @@
 import React from "react";
 import { _ } from "lodash";
+import { isCardAllowedToPlay } from '/imports/lib/isCardAllowedToPlay';
 export const getCardImage = function ({ suit, value }) {
   const mapCardValueToSymbol = {
     11: "J",
@@ -9,19 +10,20 @@ export const getCardImage = function ({ suit, value }) {
   };
   //TODO : this is essential, as this declars how colours are mapped to numbers
   // and will be used in all rendereds ( like export ). Move it to common place.
-  const mapSuitToSymbol = ["D", "C", "H", "S"];
+  const mapSuitToSymbol = ["C", "D", "H", "S"];
   return `/cards/${mapCardValueToSymbol[value] || value}${
     mapSuitToSymbol[suit]
     }.svg`;
 };
 
-export const Card = function ({ card, playCard }) {
+export const Card = function ({ card, playCard, G, ctx }) {
   const { suit, value } = card;
   return (
     <img
       className="card"
       onClick={() => {
-        console.log("clicked", playCard(card));
+        if (isCardAllowedToPlay({ G, card, ctx }))
+          console.log("clicked", playCard(card));
       }}
       src={getCardImage({ suit, value })}
     />

@@ -14,16 +14,18 @@ import { getNewTableBoard } from "/imports/api/Tables";
 import { useParams } from "react-router-dom";
 
 const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
-  const position = positionKey[playerID];
+  const position = _.keys(positionKey).find(key => {
+    return positionKey[key] == playerID;
+  })
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
-  const playCard = moves.playCard || function () { };
-
   return (
     <div>
       <Hand
+        hand={G.hands[position]}
+        G={G}
+        ctx={ctx}
         position={position}
-        hand={G.deal[position]}
         playCard={
           ctx.phase === PHASE_DECLARE
             ? function (card) {
@@ -37,9 +39,7 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
           position={position}
           G={G}
           makeBid={function (bid) {
-
             moves.bid(bid);
-
           }}
           ctx={ctx}
         ></Bidding>
@@ -62,10 +62,10 @@ export const Table = (props) => {
   });
 
   // ./
-
+  // console.log("table", table);
   // return <div>HERE IS THE TABL {isTableLoading} </div>;
   const BridgeClient = Client({
-    game: BridgeDealFactory({ vulnerability: "NS" }),
+    game: BridgeDealFactory(),
     board: BridgeTable.bind(this),
     numPlayers: 4,
     multiplayer: Local(),
