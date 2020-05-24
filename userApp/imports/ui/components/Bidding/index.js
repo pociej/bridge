@@ -1,1 +1,2 @@
-export * from "./Bidding.js";
+export * from "./BiddingBox.js";
+export * from "./BiddingTable.js";

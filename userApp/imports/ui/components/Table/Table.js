@@ -3,7 +3,7 @@ import { BridgeDealFactory, TicTacToe } from "/imports/lib/bridge.js";
 import { Local } from "boardgame.io/multiplayer";
 import { useTracker } from "meteor/react-meteor-data";
 import { Hand } from "../Hand";
-import { Bidding } from "../Bidding";
+import { BiddingBox, BiddingTable } from "../Bidding";
 import React from "react";
 import {
   playerIdToPosition,
@@ -21,6 +21,7 @@ import { BOARD_STATES } from '/imports/constants/BoardStates.js';
 const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
 
   const playerPosition = playerIdToPosition(playerID);
+  //for tests
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
 
@@ -52,7 +53,9 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
             cardsHidden={true}
           />
         </div>
-        <div className="column"></div>
+        <div className="column">
+          <BiddingTable bidding={[...G.bidding]} dealer={G.dealer} />
+        </div>
         <div className="column">
           <Hand
             ctx={ctx}
@@ -69,14 +72,14 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
         <div className="column">
           <div>
             {isCurrenPlayerBidding ? (
-              <Bidding
+              <BiddingBox
                 position={playerPosition}
                 G={G}
                 makeBid={function (bid) {
                   moves.bid(bid);
                 }}
                 ctx={ctx}
-              ></Bidding>
+              ></BiddingBox>
             ) : (
                 ""
               )}
