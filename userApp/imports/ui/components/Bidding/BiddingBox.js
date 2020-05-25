@@ -1,12 +1,11 @@
 import { Button, Card, Image, Grid } from "semantic-ui-react";
 import React, { useState } from "react";
 import { getAllowedBids } from "/imports/lib/bidding.js";
-import { positionKey } from "/imports/lib/positions.js";
 import _ from "lodash";
 import { SUIT_SYMBOLS } from "/imports/lib/Suits";
 import { SPECIAL_BIDS } from "/imports/lib/SpecialBids.js";
 
-export const Bidding = ({ G, ctx, makeBid, position }) => {
+export const BiddingBox = ({ G, ctx, makeBid, position }) => {
   const bids = getAllowedBids({ bidding: G.bidding, position });
   const [selectedLevel, setSelectedLevel] = useState(null);
   const levels = _.chain(bids)
@@ -57,7 +56,7 @@ export const Bidding = ({ G, ctx, makeBid, position }) => {
 
   return (
     <div style={{ display: "inline" }}>
-      <Card style={{ minWidth: "800px" }}>
+      <Card style={{ minWidth: "100%" }}>
         <Card.Content>
           <Grid>
             <Grid.Column width={3}>

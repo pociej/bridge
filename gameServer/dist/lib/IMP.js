@@ -4,26 +4,21 @@
  *   license that can be found in the LICENSE file or at
  *   https://opensource.org/licenses/MIT
  */
-
 // export default function IMPs(score1, score2) {
 //     const diff = Math.abs(score1 - score2); //score 1 is the teams score on table 1, score 2 the same teams score on table 2.
 //     var points;
-
 //     if (diff < 20) {
 //         return points = [0, 0]; //first number is IMP of the team whose score we entered, score 2 is the other teams IMP=
 //     }
-
 //         else if (diff >= 170 && diff <= 210) {
 //             points= [5, 0];
 //         }
-
 //         else if (diff >= 220 && diff <= 260) {
 //             points= [6, 0];
 //         }
 //         else if (diff >= 270 && diff <= 310) {
 //             points= [7, 0];
 //         }
-
 //         else if (diff >= 320 && diff <= 360) {
 //             points= [8, 0];
 //         }
@@ -80,3 +75,4 @@
 //         }
 //         return points;
 //     }
+"use strict";
