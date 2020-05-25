@@ -23,8 +23,9 @@ export const Card = function ({ card, playCard, G, ctx, hidden }) {
     <img
       className="card"
       onClick={() => {
-        if (isCardAllowedToPlay({ G, card, ctx }))
-          console.log("clicked", playCard(card));
+        if (isCardAllowedToPlay({ G, card, ctx })) {
+          playCard(card);
+        }
       }}
       src={getCardImage({ suit, value, hidden })}
     />

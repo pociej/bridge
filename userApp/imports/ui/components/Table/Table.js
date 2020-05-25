@@ -1,6 +1,6 @@
 import { Client } from "boardgame.io/react";
 import { BridgeDealFactory, TicTacToe } from "/imports/lib/bridge.js";
-import { Local } from "boardgame.io/multiplayer";
+import { Local, SocketIO } from "boardgame.io/multiplayer";
 import { useTracker } from "meteor/react-meteor-data";
 import { Hand } from "../Hand";
 import { BiddingBox, BiddingTable } from "../Bidding";
@@ -9,6 +9,7 @@ import {
   playerIdToPosition,
   positionToPlayerId,
   tablePositionToPosition,
+  positionToTablePosition,
   TABLE_POSITIONS
 } from "/imports/lib/positions.js";
 import { PHASE_BIDDING, PHASE_DECLARE } from "/imports/lib/phases.js";
@@ -19,25 +20,37 @@ import { useParams } from "react-router-dom";
 import { BOARD_STATES } from '/imports/constants/BoardStates.js';
 
 const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
-
   const playerPosition = playerIdToPosition(playerID);
   //for tests
   const isCurrenPlayerBidding =
     ctx.phase === PHASE_BIDDING && playerID === ctx.currentPlayer;
+  console.log("F", G);
 
-
+  const isDummmyVisible = ctx.phase === PHASE_DECLARE && G.tricks[0].cards.length > 0;
+  const dummyTablePosition = positionToTablePosition(G.dummy, playerPosition);
+  const isDummy = (p) => p === dummyTablePosition;
+  const isVisibleAsDummy = p => (isDummy(p) && isDummmyVisible);
   return (
     <div className="ui three column grid">
       <div className="row">
         <div className="column"></div>
         <div className="column">
+          {/* Sing with me boys, re-u-sa-bi-li-ty, TODO : get rid of redundancy below */}
           <Hand
             ctx={ctx}
             G={G}
             tablePosition={TABLE_POSITIONS.CHO}
-            position={tablePositionToPosition(TABLE_POSITIONS.CHO)}
-            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.CHO)]}
-            cardsHidden={true}
+            position={tablePositionToPosition(TABLE_POSITIONS.CHO, playerPosition)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.CHO, playerPosition)]}
+            cardsHidden={!isVisibleAsDummy(TABLE_POSITIONS.CHO)}
+            playCard={
+              function (card) {
+                console.log("checking if dummy is playing", G.isDummyPlaying)
+                if (G.isDummyPlaying && isVisibleAsDummy(TABLE_POSITIONS.CHO)) {
+                  moves.playCard(card)
+                }
+              }
+            }
           />
         </div>
         <div className="column"></div>
@@ -48,22 +61,22 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
             ctx={ctx}
             G={G}
             tablePosition={TABLE_POSITIONS.LHO}
-            position={tablePositionToPosition(TABLE_POSITIONS.LHO)}
-            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.LHO)]}
-            cardsHidden={true}
+            position={tablePositionToPosition(TABLE_POSITIONS.LHO, playerPosition)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.LHO, playerPosition)]}
+            cardsHidden={!isVisibleAsDummy(TABLE_POSITIONS.LHO)}
           />
         </div>
         <div className="column">
-          <BiddingTable bidding={[...G.bidding]} dealer={G.dealer} />
+          <BiddingTable bidding={[...G.bidding]} dealer={G.dealer} isActive={ctx.phase === PHASE_BIDDING} />
         </div>
         <div className="column">
           <Hand
             ctx={ctx}
             G={G}
             tablePosition={TABLE_POSITIONS.RHO}
-            position={tablePositionToPosition(TABLE_POSITIONS.RHO)}
-            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.RHO)]}
-            cardsHidden={true}
+            position={tablePositionToPosition(TABLE_POSITIONS.RHO, playerPosition)}
+            hand={G.hands[tablePositionToPosition(TABLE_POSITIONS.RHO, playerPosition)]}
+            cardsHidden={!isVisibleAsDummy(TABLE_POSITIONS.RHO)}
           />
         </div>
       </div>
@@ -75,9 +88,7 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
               <BiddingBox
                 position={playerPosition}
                 G={G}
-                makeBid={function (bid) {
-                  moves.bid(bid);
-                }}
+                makeBid={moves.bid}
                 ctx={ctx}
               ></BiddingBox>
             ) : (
@@ -90,11 +101,7 @@ const BridgeTable = function ({ G, ctx, playerID, moves, events }) {
               hand={G.hands[playerPosition]}
               position={playerPosition}
               playCard={
-                ctx.phase === PHASE_DECLARE
-                  ? function (card) {
-                    moves.playCard(card);
-                  }
-                  : (G, ctx) => { }
+                (!G.isDummyPlaying && ctx.phase === PHASE_DECLARE) ? moves.playCard : (G, ctx) => { }
               }
             />
 
@@ -124,23 +131,24 @@ export const Table = (props) => {
     game: BridgeDealFactory(),
     board: BridgeTable.bind(this),
     numPlayers: 4,
-    multiplayer: Local(),
+    multiplayer: SocketIO({ server: 'localhost:3010' }),
   });
 
   if (isTableLoading) {
     return ''
   } else {
-    const playerPositionId = positionToPlayerId(table.players.find(player => {
-      return player.username == Meteor.user().username;
-    }).position);
+    //temp 
+    const urlParams = new URLSearchParams(window.location.search);
+    const playerPositionId = positionToPlayerId(urlParams.get('position'));
+    // const playerPositionId = positionToPlayerId(table.players.find(player => {
+    //   return player.username == Meteor.user().username;
+    // }).position);
 
-    const currentBoard = table.getCurrentBoardId();
-    console.log("current board", currentBoard);
+    const currentBoard = urlParams.get('board');//table.getCurrentBoardId();
     // console.log("pla", playerPositionId);
-
     return (
       <div id="table">
-        <BridgeClient gameID="123" playerID="2" />
+        <BridgeClient gameID={currentBoard} playerID={playerPositionId.toString()} />
       </div>
     );
   }

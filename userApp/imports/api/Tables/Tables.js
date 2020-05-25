@@ -60,7 +60,7 @@ const playerInterface = {
   getCurrentBoardId() {
     return this.boards.find((board) => {
       return board.state === BOARD_STATES.PLAYING;
-    });
+    }).boardId;
   }
 };
 export const Tables = new Mongo.Collection("tables", {

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.3",
-    "boardgame.io": "^0.39.10",
+    "boardgame.io": "^0.39.11",
     "cardsJS": "^1.1.1",
     "connected-react-router": "^6.8.0",
     "history": "^4.10.1",

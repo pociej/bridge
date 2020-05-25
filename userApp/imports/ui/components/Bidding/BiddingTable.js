@@ -4,8 +4,8 @@ import { SUIT_SYMBOLS } from "/imports/lib/Suits";
 import { _ } from 'lodash';
 import { POSITIONS } from '/imports/lib/positions.js';
 
-export const BiddingTable = function ({ bidding, dealer }) {
-  bidding.push({ position: dealer, bid: '?' });
+export const BiddingTable = function ({ bidding, dealer, isActive }) {
+  if (isActive) bidding.push({ position: dealer, bid: '?' });
   const rows = bidding.reduce((result, bid) => {
     const currentRow = _.last(result);
     if (currentRow.length === 4) {

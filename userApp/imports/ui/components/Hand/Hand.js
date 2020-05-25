@@ -18,7 +18,6 @@ export const Hand = ({ tablePosition, position, hand, cardsHidden, playCard, G, 
     const key = `card_${i}`;
     return <Card key={key} card={card} hidden={cardsHidden} playCard={playCard} G={G} ctx={ctx} />;
   });
-  console.log("tabv", tablePosition, TABLE_POSITIONS.CHO, TABLE_POSITIONS.PLAYER)
   return (
     <div className={containerClassName}>
       {tablePosition === TABLE_POSITIONS.CHO || tablePosition === TABLE_POSITIONS.PLAYER ?
