@@ -23,7 +23,7 @@
     "boardgame.io": "^0.39.11",
     "browser-or-node": "^1.1.0",
     "lodash.product": "^18.9.19",
-    "mongodb": "^3.1.10",
+    "mongodb": "^3.1.13",
     "node-persist": "^3.0.5",
     "npx": "^10.2.2"
   }
