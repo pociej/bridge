@@ -14,7 +14,7 @@
     "connected-react-router": "^6.8.0",
     "history": "^4.10.1",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash.product": "^18.9.19",
     "meteor-node-stubs": "^1.0.0",
     "react": "^16.13.1",
